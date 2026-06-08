@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinguaPetal — Language Translator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose:#f4c6cc;--peach:#fad7c0;--mint:#c7ece4;--lavender:#ddd6f3;
+    --text:#5a4a5a;--soft:#9e8a9e;--card:rgba(255,255,255,0.72);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#fde8ee 0%,#fef3e8 25%,#fdf8e8 50%,#e8f7f2 75%,#eae8f9 100%);min-height:100vh;color:var(--text);padding:2rem 1rem 4rem;}
+  body::before,body::after{content:'';position:fixed;border-radius:50%;filter:blur(80px);opacity:.35;pointer-events:none;z-index:0;}
+  body::before{width:500px;height:500px;background:var(--rose);top:-100px;left:-100px;}
+  body::after{width:400px;height:400px;background:var(--mint);bottom:-80px;right:-80px;}
+  .wrap{max-width:720px;margin:0 auto;position:relative;z-index:1;}
+  header{text-align:center;margin-bottom:2.5rem;}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);color:var(--text);}
+  header h1 span{color:#c48a9a;font-style:italic;}
+  header p{margin-top:.5rem;font-size:.95rem;color:var(--soft);font-weight:300;}
+  .badge{display:inline-block;margin-top:.75rem;background:var(--card);border:1px solid #f0d8e0;border-radius:99px;padding:.25rem .9rem;font-size:.8rem;color:var(--soft);backdrop-filter:blur(8px);}
+  .card{background:var(--card);border-radius:24px;padding:2rem;backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);box-shadow:0 8px 40px rgba(180,140,160,.12);margin-bottom:1.5rem;}
+  label{display:block;font-size:.82rem;font-weight:500;color:var(--soft);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.5rem;}
+  textarea{width:100%;min-height:110px;border:1.5px solid #f0d8e4;border-radius:14px;padding:1rem;font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--text);background:rgba(255,255,255,.6);resize:vertical;outline:none;transition:border .2s;}
+  textarea:focus{border-color:#c48a9a;background:rgba(255,255,255,.9);}
+  textarea::placeholder{color:#c5b0c5;}
+  .lang-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.6rem;margin-top:.5rem;}
+  .lang-btn{padding:.55rem .5rem;border-radius:12px;border:1.5px solid #eddee8;background:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--soft);cursor:pointer;transition:all .18s;text-align:center;}
+  .lang-btn:hover{border-color:#c48a9a;color:#c48a9a;background:rgba(244,198,204,.2);}
+  .lang-btn.active{background:linear-gradient(135deg,#f4c6cc,#ddd6f3);border-color:transparent;color:var(--text);font-weight:500;box-shadow:0 2px 12px rgba(180,140,160,.2);}
+  .btn-translate{width:100%;margin-top:1.2rem;padding:1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#f4c6cc 0%,#ddd6f3 100%);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;color:var(--text);cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 20px rgba(180,140,160,.25);}
+  .btn-translate:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(180,140,160,.35);}
+  .result-box{display:none;margin-top:1.2rem;padding:1.2rem 1.4rem;background:linear-gradient(135deg,rgba(199,236,228,.4),rgba(221,214,243,.4));border-radius:16px;border:1.5px solid rgba(199,236,228,.6);animation:popIn .3s ease;}
+  .result-box.show{display:block;}
+  @keyframes popIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .result-label{font-size:.75rem;color:var(--soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem;}
+  .result-text{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);line-height:1.5;}
+  .result-lang{margin-top:.4rem;font-size:.82rem;color:#c48a9a;}
+  .history-list{list-style:none;}
+  .history-list li{padding:.75rem 1rem;border-radius:12px;background:rgba(255,255,255,.5);margin-bottom:.5rem;font-size:.88rem;border:1px solid rgba(240,216,228,.5);display:flex;justify-content:space-between;align-items:center;gap:1rem;animation:popIn .25s ease;}
+  .history-list li .orig{color:var(--soft);}
+  .history-list li .arrow{color:#c48a9a;flex-shrink:0;}
+  .history-list li .trans{font-weight:500;}
+  .history-list li .hlang{font-size:.75rem;color:#b0a0b0;margin-left:.3rem;}
+  .empty-history{text-align:center;color:var(--soft);font-size:.9rem;padding:1.5rem 0;font-style:italic;}
+  .clear-btn{background:none;border:1.5px solid #eddee8;border-radius:10px;padding:.4rem .9rem;font-size:.8rem;color:var(--soft);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+  .clear-btn:hover{border-color:#c48a9a;color:#c48a9a;}
+  .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text);}
+  footer{text-align:center;margin-top:2rem;font-size:.78rem;color:#c5b0c5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Lingua<span>Petal</span></h1>
+    <p>Translate English into 16 languages, instantly</p>
+    <span class="badge">✦ Advanced C Programming Project</span>
+  </header>
+  <div class="card">
+    <label>Type in English</label>
+    <textarea id="inputText" placeholder="hello, how are you today…"></textarea>
+    <label style="margin-top:1.2rem">Choose a language</label>
+    <div class="lang-grid" id="langGrid"></div>
+    <button class="btn-translate" onclick="doTranslate()">Translate ✦</button>
+    <div class="result-box" id="resultBox">
+      <div class="result-label">Translation</div>
+      <div class="result-text" id="resultText"></div>
+      <div class="result-lang" id="resultLang"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-header">
+      <span class="section-title">History</span>
+      <button class="clear-btn" onclick="clearHistory()">Clear</button>
+    </div>
+    <ul class="history-list" id="historyList">
+      <li class="empty-history">No translations yet 🌸</li>
+    </ul>
+  </div>
+  <footer>Made with care · Advanced C Programming · 2025</footer>
+</div>
+<script>
+const dictionary={hello:{Spanish:"hola",French:"bonjour",German:"hallo",Turkish:"merhaba",Arabic:"مرحبا",Hindi:"नमस्ते",Portuguese:"olá",Russian:"привет",Japanese:"こんにちは",Korean:"안녕하세요",Chinese:"你好",Italian:"ciao",Dutch:"hallo",Polish:"cześć",Urdu:"ہیلو",Uzbek:"salom"},goodbye:{Spanish:"adiós",French:"au revoir",German:"auf wiedersehen",Turkish:"hoşça kal",Arabic:"وداعا",Hindi:"अलविदा",Portuguese:"adeus",Russian:"пока",Japanese:"さようなら",Korean:"안녕히",Chinese:"再见",Italian:"arrivederci",Dutch:"tot ziens",Polish:"do widzenia",Urdu:"الوداع",Uzbek:"xayr"},yes:{Spanish:"sí",French:"oui",German:"ja",Turkish:"evet",Arabic:"نعم",Hindi:"हाँ",Portuguese:"sim",Russian:"да",Japanese:"はい",Korean:"네",Chinese:"是",Italian:"sì",Dutch:"ja",Polish:"tak",Urdu:"ہاں",Uzbek:"ha"},no:{Spanish:"no",French:"non",German:"nein",Turkish:"hayır",Arabic:"لا",Hindi:"नहीं",Portuguese:"não",Russian:"нет",Japanese:"いいえ",Korean:"아니요",Chinese:"不",Italian:"no",Dutch:"nee",Polish:"nie",Urdu:"نہیں",Uzbek:"yo'q"},please:{Spanish:"por favor",French:"s'il vous plaît",German:"bitte",Turkish:"lütfen",Arabic:"من فضلك",Hindi:"कृपया",Portuguese:"por favor",Russian:"пожалуйста",Japanese:"どうぞ",Korean:"제발",Chinese:"请",Italian:"per favore",Dutch:"alstublieft",Polish:"proszę",Urdu:"براہ کرم",Uzbek:"iltimos"},"thank you":{Spanish:"gracias",French:"merci",German:"danke",Turkish:"teşekkür",Arabic:"شكرا",Hindi:"धन्यवाद",Portuguese:"obrigado",Russian:"спасибо",Japanese:"ありがとう",Korean:"감사합니다",Chinese:"谢谢",Italian:"grazie",Dutch:"dank je",Polish:"dziękuję",Urdu:"شکریہ",Uzbek:"rahmat"},sorry:{Spanish:"lo siento",French:"désolé",German:"entschuldigung",Turkish:"özür dilerim",Arabic:"آسف",Hindi:"माफ करना",Portuguese:"desculpe",Russian:"извините",Japanese:"ごめんなさい",Korean:"죄송합니다",Chinese:"对不起",Italian:"scusa",Dutch:"sorry",Polish:"przepraszam",Urdu:"معاف کریں",Uzbek:"kechirasiz"},help:{Spanish:"ayuda",French:"aide",German:"hilfe",Turkish:"yardım",Arabic:"مساعدة",Hindi:"मदद",Portuguese:"ajuda",Russian:"помощь",Japanese:"助けて",Korean:"도움",Chinese:"帮助",Italian:"aiuto",Dutch:"hulp",Polish:"pomoc",Urdu:"مدد",Uzbek:"yordam"},water:{Spanish:"agua",French:"eau",German:"wasser",Turkish:"su",Arabic:"ماء",Hindi:"पानी",Portuguese:"água",Russian:"вода",Japanese:"水",Korean:"물",Chinese:"水",Italian:"acqua",Dutch:"water",Polish:"woda",Urdu:"پانی",Uzbek:"suv"},food:{Spanish:"comida",French:"nourriture",German:"essen",Turkish:"yemek",Arabic:"طعام",Hindi:"खाना",Portuguese:"comida",Russian:"еда",Japanese:"食べ物",Korean:"음식",Chinese:"食物",Italian:"cibo",Dutch:"eten",Polish:"jedzenie",Urdu:"کھانا",Uzbek:"ovqat"},love:{Spanish:"amor",French:"amour",German:"liebe",Turkish:"aşk",Arabic:"حب",Hindi:"प्यार",Portuguese:"amor",Russian:"любовь",Japanese:"愛",Korean:"사랑",Chinese:"爱",Italian:"amore",Dutch:"liefde",Polish:"miłość",Urdu:"محبت",Uzbek:"muhabbat"},good:{Spanish:"bueno",French:"bon",German:"gut",Turkish:"iyi",Arabic:"جيد",Hindi:"अच्छा",Portuguese:"bom",Russian:"хорошо",Japanese:"良い",Korean:"좋다",Chinese:"好",Italian:"buono",Dutch:"goed",Polish:"dobry",Urdu:"اچھا",Uzbek:"yaxshi"},bad:{Spanish:"malo",French:"mauvais",German:"schlecht",Turkish:"kötü",Arabic:"سيء",Hindi:"बुरा",Portuguese:"mau",Russian:"плохо",Japanese:"悪い",Korean:"나쁘다",Chinese:"坏",Italian:"cattivo",Dutch:"slecht",Polish:"zły",Urdu:"برا",Uzbek:"yomon"},friend:{Spanish:"amigo",French:"ami",German:"freund",Turkish:"arkadaş",Arabic:"صديق",Hindi:"दोस्त",Portuguese:"amigo",Russian:"друг",Japanese:"友達",Korean:"친구",Chinese:"朋友",Italian:"amico",Dutch:"vriend",Polish:"przyjaciel",Urdu:"دوست",Uzbek:"do'st"},happy:{Spanish:"feliz",French:"heureux",German:"glücklich",Turkish:"mutlu",Arabic:"سعيد",Hindi:"खुश",Portuguese:"feliz",Russian:"счастливый",Japanese:"嬉しい",Korean:"행복하다",Chinese:"快乐",Italian:"felice",Dutch:"blij",Polish:"szczęśliwy",Urdu:"خوش",Uzbek:"baxtli"},beautiful:{Spanish:"hermoso",French:"beau",German:"schön",Turkish:"güzel",Arabic:"جميل",Hindi:"सुंदर",Portuguese:"bonito",Russian:"красивый",Japanese:"美しい",Korean:"아름답다",Chinese:"美丽",Italian:"bello",Dutch:"mooi",Polish:"piękny",Urdu:"خوبصورت",Uzbek:"chiroyli"},family:{Spanish:"familia",French:"famille",German:"familie",Turkish:"aile",Arabic:"عائلة",Hindi:"परिवार",Portuguese:"família",Russian:"семья",Japanese:"家族",Korean:"가족",Chinese:"家庭",Italian:"famiglia",Dutch:"familie",Polish:"rodzina",Urdu:"خاندان",Uzbek:"oila"},school:{Spanish:"escuela",French:"école",German:"schule",Turkish:"okul",Arabic:"مدرسة",Hindi:"स्कूल",Portuguese:"escola",Russian:"школа",Japanese:"学校",Korean:"학교",Chinese:"学校",Italian:"scuola",Dutch:"school",Polish:"szkoła",Urdu:"اسکول",Uzbek:"maktab"},book:{Spanish:"libro",French:"livre",German:"buch",Turkish:"kitap",Arabic:"كتاب",Hindi:"किताब",Portuguese:"livro",Russian:"книга",Japanese:"本",Korean:"책",Chinese:"书",Italian:"libro",Dutch:"boek",Polish:"książka",Urdu:"کتاب",Uzbek:"kitob"},today:{Spanish:"hoy",French:"aujourd'hui",German:"heute",Turkish:"bugün",Arabic:"اليوم",Hindi:"आज",Portuguese:"hoje",Russian:"сегодня",Japanese:"今日",Korean:"오늘",Chinese:"今天",Italian:"oggi",Dutch:"vandaag",Polish:"dzisiaj",Urdu:"آج",Uzbek:"bugun"},morning:{Spanish:"mañana",French:"matin",German:"morgen",Turkish:"sabah",Arabic:"صباح",Hindi:"सुबह",Portuguese:"manhã",Russian:"утро",Japanese:"朝",Korean:"아침",Chinese:"早上",Italian:"mattina",Dutch:"ochtend",Polish:"rano",Urdu:"صبح",Uzbek:"ertalab"},night:{Spanish:"noche",French:"nuit",German:"nacht",Turkish:"gece",Arabic:"ليل",Hindi:"रात",Portuguese:"noite",Russian:"ночь",Japanese:"夜",Korean:"밤",Chinese:"晚上",Italian:"notte",Dutch:"nacht",Polish:"noc",Urdu:"رات",Uzbek:"kecha"},i:{Spanish:"yo",French:"je",German:"ich",Turkish:"ben",Arabic:"أنا",Hindi:"मैं",Portuguese:"eu",Russian:"я",Japanese:"私",Korean:"나",Chinese:"我",Italian:"io",Dutch:"ik",Polish:"ja",Urdu:"میں",Uzbek:"men"},you:{Spanish:"tú",French:"vous",German:"du",Turkish:"sen",Arabic:"أنت",Hindi:"तुम",Portuguese:"você",Russian:"ты",Japanese:"あなた",Korean:"당신",Chinese:"你",Italian:"tu",Dutch:"jij",Polish:"ty",Urdu:"آپ",Uzbek:"siz"},how:{Spanish:"cómo",French:"comment",German:"wie",Turkish:"nasıl",Arabic:"كيف",Hindi:"कैसे",Portuguese:"como",Russian:"как",Japanese:"どうやって",Korean:"어떻게",Chinese:"怎么",Italian:"come",Dutch:"hoe",Polish:"jak",Urdu:"کیسے",Uzbek:"qanday"},what:{Spanish:"qué",French:"quoi",German:"was",Turkish:"ne",Arabic:"ماذا",Hindi:"क्या",Portuguese:"o que",Russian:"что",Japanese:"何",Korean:"뭐",Chinese:"什么",Italian:"cosa",Dutch:"wat",Polish:"co",Urdu:"کیا",Uzbek:"nima"}};
+const languages=["Spanish","French","German","Turkish","Arabic","Hindi","Portuguese","Russian","Japanese","Korean","Chinese","Italian","Dutch","Polish","Urdu","Uzbek"];
+const flags={Spanish:"🇪🇸",French:"🇫🇷",German:"🇩🇪",Turkish:"🇹🇷",Arabic:"🇸🇦",Hindi:"🇮🇳",Portuguese:"🇧🇷",Russian:"🇷🇺",Japanese:"🇯🇵",Korean:"🇰🇷",Chinese:"🇨🇳",Italian:"🇮🇹",Dutch:"🇳🇱",Polish:"🇵🇱",Urdu:"🇵🇰",Uzbek:"🇺🇿"};
+let selectedLang="Spanish",history=[];
+const grid=document.getElementById('langGrid');
+languages.forEach(lang=>{const btn=document.createElement('button');btn.className='lang-btn'+(lang===selectedLang?' active':'');btn.textContent=flags[lang]+' '+lang;btn.onclick=()=>{document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedLang=lang;};grid.appendChild(btn);});
+function translateWord(w){const e=dictionary[w.toLowerCase()];return e&&e[selectedLang]?e[selectedLang]:w;}
+function doTranslate(){const input=document.getElementById('inputText').value.trim();if(!input)return;const translated=input.split(/\s+/).map(w=>translateWord(w)).join(' ');document.getElementById('resultText').textContent=translated;document.getElementById('resultLang').textContent=flags[selectedLang]+' '+selectedLang;document.getElementById('resultBox').classList.add('show');history.unshift({orig:input,trans:translated,lang:selectedLang});renderHistory();}
+function renderHistory(){const list=document.getElementById('historyList');if(history.length===0){list.innerHTML='<li class="empty-history">No translations yet 🌸</li>';return;}list.innerHTML=history.slice(0,10).map(h=>`<li><span class="orig">${h.orig}</span><span class="arrow">→</span><span class="trans">${h.trans}<span class="hlang">${flags[h.lang]} ${h.lang}</span></span></li>`).join('');}
+function clearHistory(){history=[];renderHistory();document.getElementById('resultBox').classList.remove('show');}
+document.getElementById('inputText').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doTranslate();}});
+</script>
+</body>
+</html>
