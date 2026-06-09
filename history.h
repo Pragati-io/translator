@@ -18,3 +18,4 @@ void        history_clear(void);
 int         history_count(void);
 
 #endif // HISTORY_H
+
