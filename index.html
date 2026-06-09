@@ -250,16 +250,32 @@ commonSignWords.forEach(({word,emoji})=>{
 });
 
 function translateWord(w){const e=dict[w.toLowerCase()];return e&&e[selectedLang]?e[selectedLang]:w;}
-function doTranslate(){
+async function doTranslate(){
   const input=document.getElementById('inputText').value.trim();
   if(!input)return;
-  const translated=input.split(/\s+/).map(w=>translateWord(w)).join(' ');
-  lastTranslation=translated;
-  document.getElementById('resultText').textContent=translated;
-  document.getElementById('resultLang').textContent=flags[selectedLang]+' '+selectedLang;
-  document.getElementById('resultBox').classList.add('show');
-  history.unshift({orig:input,trans:translated,lang:selectedLang});
-  renderHistory();
+  const btn=document.querySelector('#translate .btn-translate');
+  btn.textContent='Translating…';btn.disabled=true;
+  try{
+    const langCode=langCodes[selectedLang]||'es';
+    const code=langCode.split('-')[0];
+    const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=en|${code}`);
+    const data=await res.json();
+    const translated=data.responseData.translatedText;
+    lastTranslation=translated;
+    document.getElementById('resultText').textContent=translated;
+    document.getElementById('resultLang').textContent=flags[selectedLang]+' '+selectedLang;
+    document.getElementById('resultBox').classList.add('show');
+    history.unshift({orig:input,trans:translated,lang:selectedLang});
+    renderHistory();
+  }catch(e){
+    showToast('Translation failed, trying offline…');
+    const translated=input.split(/\s+/).map(w=>translateWord(w)).join(' ');
+    lastTranslation=translated;
+    document.getElementById('resultText').textContent=translated;
+    document.getElementById('resultLang').textContent=flags[selectedLang]+' '+selectedLang;
+    document.getElementById('resultBox').classList.add('show');
+  }
+  btn.textContent='Translate ✦';btn.disabled=false;
 }
 
 function copyTranslation(){
@@ -305,24 +321,28 @@ function doReverse(){
     :matches.map(m=>`<li style="padding:.4rem 0;border-bottom:1px solid rgba(200,180,200,.2)">${flags[m.lang]} <span style="color:#c48a9a;font-weight:500">${m.val}</span> in ${m.lang} = <strong>${m.eng}</strong></li>`).join('');
 }
 
-function doSign(){
+async function doSign(){
   const raw=document.getElementById('signInput').value.trim();
   if(!raw){showToast('Please type something!');return;}
-  // find English
-  let english=raw.toLowerCase();
-  for(const [eng,translations] of Object.entries(dict)){
-    for(const val of Object.values(translations)){
-      if(val.toLowerCase()===english){english=eng;break;}
-    }
-  }
-  // word by word
-  const words=english.split(/\s+/).map(w=>{
+  const btn=document.querySelector('#sign .btn-translate');
+  btn.textContent='Processing…';btn.disabled=true;
+
+  let english=raw;
+
+  // If input contains non-latin characters, translate to English first
+  const hasNonLatin=/[^\x00-\x7F]/.test(raw);
+  if(hasNonLatin){
+    try{
+      const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(raw)}&langpair=autodetect|en`);
+      const data=await res.json();
+      english=data.responseData.translatedText;
+    }catch(e){english=raw;}
+  } else {
+    // try dictionary reverse lookup
     for(const [eng,translations] of Object.entries(dict))
       for(const val of Object.values(translations))
-        if(val.toLowerCase()===w)return eng;
-    return w;
-  });
-  english=words.join(' ');
+        if(val.toLowerCase()===raw.toLowerCase()){english=eng;break;}
+  }
 
   document.getElementById('signEnglish').innerHTML=
     english.toLowerCase()!==raw.toLowerCase()
@@ -342,6 +362,7 @@ function doSign(){
     });
   });
   document.getElementById('signResultCard').style.display='block';
+  btn.textContent='Show Sign Language 🤟';btn.disabled=false;
 }
 
 function renderHistory(){
