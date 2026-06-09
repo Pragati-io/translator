@@ -54,7 +54,7 @@ gcc main.c translator.c history.c -o translator
 | Name | Student ID |
 |------|-----------|
 | Pragati Badame | 25013466 |
-| Laiza Afnan | — |
+|Raisa Leuza Afnan | 25013403|
 | Nafiz Arfan Ahmed | 23012854 |
 | Ashu | 25014147 |
 
