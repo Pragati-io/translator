@@ -18,16 +18,12 @@ header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,2.8rem);
 header h1 span{color:#c48a9a;font-style:italic;}
 header p{margin-top:.4rem;font-size:.9rem;color:var(--soft);}
 .badge{display:inline-block;margin-top:.6rem;background:var(--card);border:1px solid #f0d8e0;border-radius:99px;padding:.2rem .9rem;font-size:.78rem;color:var(--soft);}
-
-/* tabs */
 .tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;background:var(--card);border-radius:16px;padding:.4rem;border:1px solid rgba(255,255,255,.8);}
 .tab{flex:1;padding:.6rem;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--soft);background:transparent;cursor:pointer;transition:all .2s;}
 .tab.active{background:linear-gradient(135deg,#f4c6cc,#ddd6f3);color:var(--text);font-weight:500;box-shadow:0 2px 10px rgba(180,140,160,.2);}
 .card{background:var(--card);border-radius:24px;padding:1.8rem;backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);box-shadow:0 8px 40px rgba(180,140,160,.12);margin-bottom:1.5rem;}
 .section{display:none;}.section.active{display:block;}
 label{display:block;font-size:.78rem;font-weight:500;color:var(--soft);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.4rem;}
-
-/* input */
 .input-row{position:relative;}
 textarea{width:100%;min-height:100px;border:1.5px solid #f0d8e4;border-radius:14px;padding:.9rem 3rem .9rem .9rem;font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--text);background:rgba(255,255,255,.6);resize:vertical;outline:none;transition:border .2s;}
 textarea:focus{border-color:#c48a9a;background:#fff;}
@@ -36,30 +32,22 @@ textarea::placeholder{color:#c5b0c5;}
 .mic-btn:hover{transform:scale(1.1);}
 .mic-btn.listening{background:linear-gradient(135deg,#ff9a9e,#f4c6cc);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(196,138,154,.4)}50%{box-shadow:0 0 0 8px rgba(196,138,154,0)}}
-
-/* language picker button */
 .lang-picker-btn{width:100%;padding:.8rem 1rem;border-radius:14px;border:1.5px solid #eddee8;background:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .2s;margin-top:.4rem;}
 .lang-picker-btn:hover{border-color:#c48a9a;background:#fff;}
-.lang-picker-btn .arrow{color:var(--soft);font-size:.8rem;}
-
-/* modal overlay */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(90,74,90,.3);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
 .modal{background:#fff;border-radius:24px;padding:1.8rem;width:90%;max-width:520px;box-shadow:0 20px 60px rgba(180,140,160,.3);animation:popIn .25s ease;}
 @keyframes popIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;}
 .modal-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);}
-.modal-close{background:none;border:none;font-size:1.4rem;color:var(--soft);cursor:pointer;line-height:1;}
+.modal-close{background:none;border:none;font-size:1.4rem;color:var(--soft);cursor:pointer;}
 .modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.5rem;}
 .modal-lang-btn{padding:.6rem .5rem;border-radius:12px;border:1.5px solid #eddee8;background:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--soft);cursor:pointer;transition:all .18s;text-align:center;}
-.modal-lang-btn:hover{border-color:#c48a9a;color:#c48a9a;background:rgba(244,198,204,.15);}
+.modal-lang-btn:hover{border-color:#c48a9a;color:#c48a9a;}
 .modal-lang-btn.active{background:linear-gradient(135deg,#f4c6cc,#ddd6f3);border-color:transparent;color:var(--text);font-weight:500;}
-
-/* translate btn */
 .btn-translate{width:100%;margin-top:1rem;padding:.9rem;border:none;border-radius:14px;background:linear-gradient(135deg,#f4c6cc,#ddd6f3);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;color:var(--text);cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 20px rgba(180,140,160,.25);}
 .btn-translate:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(180,140,160,.35);}
-
-/* result */
+.btn-translate:disabled{opacity:.6;transform:none;cursor:wait;}
 .result-box{display:none;margin-top:1rem;padding:1.1rem 1.3rem;background:linear-gradient(135deg,rgba(199,236,228,.4),rgba(221,214,243,.4));border-radius:16px;border:1.5px solid rgba(199,236,228,.6);animation:popIn .3s ease;}
 .result-box.show{display:block;}
 .result-label{font-size:.72rem;color:var(--soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem;}
@@ -68,20 +56,16 @@ textarea::placeholder{color:#c5b0c5;}
 .result-actions{display:flex;gap:.5rem;margin-top:.8rem;}
 .action-btn{padding:.4rem .9rem;border-radius:10px;border:1.5px solid #eddee8;background:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--soft);cursor:pointer;transition:all .15s;}
 .action-btn:hover{border-color:#c48a9a;color:#c48a9a;}
-
-/* history */
 .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
 .section-title{font-family:'Playfair Display',serif;font-size:1.05rem;}
 .clear-btn{background:none;border:1.5px solid #eddee8;border-radius:10px;padding:.35rem .8rem;font-size:.78rem;color:var(--soft);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
 .clear-btn:hover{border-color:#c48a9a;color:#c48a9a;}
 .history-list{list-style:none;}
-.history-list li{padding:.65rem .9rem;border-radius:12px;background:rgba(255,255,255,.5);margin-bottom:.4rem;font-size:.85rem;border:1px solid rgba(240,216,228,.5);display:flex;align-items:center;gap:.6rem;animation:popIn .25s ease;}
-.history-list li .orig{color:var(--soft);flex:1;}
+.history-list li{padding:.65rem .9rem;border-radius:12px;background:rgba(255,255,255,.5);margin-bottom:.4rem;font-size:.85rem;border:1px solid rgba(240,216,228,.5);display:flex;align-items:center;gap:.6rem;}
+.history-list li .orig{color:var(--soft);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .history-list li .arrow{color:#c48a9a;flex-shrink:0;}
-.history-list li .trans{font-weight:500;flex:1;}
+.history-list li .trans{font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .empty-history{text-align:center;color:var(--soft);font-size:.88rem;padding:1.5rem 0;font-style:italic;}
-
-/* travel */
 .country-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.5rem;margin-bottom:1.2rem;}
 .country-btn{padding:.6rem .5rem;border-radius:12px;border:1.5px solid #eddee8;background:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:.82rem;color:var(--soft);cursor:pointer;transition:all .18s;text-align:center;}
 .country-btn:hover{border-color:#c48a9a;color:#c48a9a;}
@@ -91,20 +75,15 @@ textarea::placeholder{color:#c5b0c5;}
 .phrase-list li .en{color:var(--soft);font-size:.85rem;flex:1;}
 .phrase-list li .tr{font-weight:500;font-size:.85rem;flex:1;}
 .phrase-speak{background:none;border:none;cursor:pointer;font-size:1rem;color:#c48a9a;}
-
-/* reverse */
 .reverse-input{width:100%;min-height:80px;border:1.5px solid #f0d8e4;border-radius:14px;padding:.9rem;font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--text);background:rgba(255,255,255,.6);resize:vertical;outline:none;transition:border .2s;}
 .reverse-input:focus{border-color:#c48a9a;background:#fff;}
-.reverse-result{display:none;padding:1rem 1.2rem;background:linear-gradient(135deg,rgba(199,236,228,.4),rgba(221,214,243,.4));border-radius:14px;margin-top:.8rem;animation:popIn .3s ease;}
+.reverse-result{display:none;padding:1rem 1.2rem;background:linear-gradient(135deg,rgba(199,236,228,.4),rgba(221,214,243,.4));border-radius:14px;margin-top:.8rem;}
 .reverse-result.show{display:block;}
-.reverse-matches{list-style:none;margin-top:.5rem;}
-.reverse-matches li{padding:.4rem 0;border-bottom:1px solid rgba(200,180,200,.2);font-size:.9rem;}
-.reverse-matches li:last-child{border:none;}
-.reverse-matches li span{color:#c48a9a;font-weight:500;}
-
 footer{text-align:center;margin-top:1.5rem;font-size:.75rem;color:#c5b0c5;}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#5a4a5a;color:#fff;padding:.6rem 1.4rem;border-radius:99px;font-size:.85rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;}
 .toast.show{opacity:1;}
+.loading{display:inline-block;width:16px;height:16px;border:2px solid #c48a9a;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:.4rem;}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -114,7 +93,6 @@ footer{text-align:center;margin-top:1.5rem;font-size:.75rem;color:#c5b0c5;}
     <p>Translate · Explore · Discover</p>
     <span class="badge">✦ Advanced C Programming Project</span>
   </header>
-
   <div class="tabs">
     <button class="tab active" onclick="switchTab('translate',this)">🌸 Translate</button>
     <button class="tab" onclick="switchTab('travel',this)">🌍 Travel</button>
@@ -126,15 +104,15 @@ footer{text-align:center;margin-top:1.5rem;font-size:.75rem;color:#c5b0c5;}
     <div class="card">
       <label>Type or speak in English</label>
       <div class="input-row">
-        <textarea id="inputText" placeholder="hello, how are you…"></textarea>
+        <textarea id="inputText" placeholder="Type anything in English…"></textarea>
         <button class="mic-btn" id="micBtn" onclick="toggleMic()" title="Voice input">🎤</button>
       </div>
       <label style="margin-top:1rem">Target language</label>
       <button class="lang-picker-btn" id="langPickerBtn" onclick="openModal()">
         <span id="selectedLangDisplay">🇪🇸 Spanish</span>
-        <span class="arrow">▼ choose</span>
+        <span style="color:var(--soft);font-size:.8rem">▼ choose</span>
       </button>
-      <button class="btn-translate" onclick="doTranslate()">Translate ✦</button>
+      <button class="btn-translate" id="translateBtn" onclick="doTranslate()">Translate ✦</button>
       <div class="result-box" id="resultBox">
         <div class="result-label">Translation</div>
         <div class="result-text" id="resultText"></div>
@@ -171,11 +149,11 @@ footer{text-align:center;margin-top:1.5rem;font-size:.75rem;color:#c5b0c5;}
   <div class="section" id="reverse">
     <div class="card">
       <label>Paste a foreign word or phrase</label>
-      <textarea class="reverse-input" id="reverseInput" placeholder="e.g. bonjour, merci, salam…"></textarea>
-      <button class="btn-translate" onclick="doReverse()">Find English meaning ✦</button>
+      <textarea class="reverse-input" id="reverseInput" placeholder="e.g. bonjour, gracias, salom…"></textarea>
+      <button class="btn-translate" id="reverseBtn" onclick="doReverse()">Find English meaning ✦</button>
       <div class="reverse-result" id="reverseResult">
         <div class="result-label">English meaning</div>
-        <ul class="reverse-matches" id="reverseMatches"></ul>
+        <div class="result-text" id="reverseText" style="font-family:'Playfair Display',serif;font-size:1.2rem;margin-top:.3rem;"></div>
       </div>
     </div>
   </div>
@@ -183,7 +161,7 @@ footer{text-align:center;margin-top:1.5rem;font-size:.75rem;color:#c5b0c5;}
   <footer>Made with care · Advanced C Programming · 2025</footer>
 </div>
 
-<!-- LANGUAGE MODAL -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
   <div class="modal">
     <div class="modal-header">
@@ -197,33 +175,29 @@ footer{text-align:center;margin-top:1.5rem;font-size:.75rem;color:#c5b0c5;}
 <div class="toast" id="toast"></div>
 
 <script>
-const dictionary={hello:{Spanish:"hola",French:"bonjour",German:"hallo",Turkish:"merhaba",Arabic:"مرحبا",Hindi:"नमस्ते",Portuguese:"olá",Russian:"привет",Japanese:"こんにちは",Korean:"안녕하세요",Chinese:"你好",Italian:"ciao",Dutch:"hallo",Polish:"cześć",Urdu:"ہیلو",Uzbek:"salom"},goodbye:{Spanish:"adiós",French:"au revoir",German:"auf wiedersehen",Turkish:"hoşça kal",Arabic:"وداعا",Hindi:"अलविदा",Portuguese:"adeus",Russian:"пока",Japanese:"さようなら",Korean:"안녕히",Chinese:"再见",Italian:"arrivederci",Dutch:"tot ziens",Polish:"do widzenia",Urdu:"الوداع",Uzbek:"xayr"},yes:{Spanish:"sí",French:"oui",German:"ja",Turkish:"evet",Arabic:"نعم",Hindi:"हाँ",Portuguese:"sim",Russian:"да",Japanese:"はい",Korean:"네",Chinese:"是",Italian:"sì",Dutch:"ja",Polish:"tak",Urdu:"ہاں",Uzbek:"ha"},no:{Spanish:"no",French:"non",German:"nein",Turkish:"hayır",Arabic:"لا",Hindi:"नहीं",Portuguese:"não",Russian:"нет",Japanese:"いいえ",Korean:"아니요",Chinese:"不",Italian:"no",Dutch:"nee",Polish:"nie",Urdu:"نہیں",Uzbek:"yo'q"},please:{Spanish:"por favor",French:"s'il vous plaît",German:"bitte",Turkish:"lütfen",Arabic:"من فضلك",Hindi:"कृपया",Portuguese:"por favor",Russian:"пожалуйста",Japanese:"どうぞ",Korean:"제발",Chinese:"请",Italian:"per favore",Dutch:"alstublieft",Polish:"proszę",Urdu:"براہ کرم",Uzbek:"iltimos"},"thank you":{Spanish:"gracias",French:"merci",German:"danke",Turkish:"teşekkür",Arabic:"شكرا",Hindi:"धन्यवाद",Portuguese:"obrigado",Russian:"спасибо",Japanese:"ありがとう",Korean:"감사합니다",Chinese:"谢谢",Italian:"grazie",Dutch:"dank je",Polish:"dziękuję",Urdu:"شکریہ",Uzbek:"rahmat"},sorry:{Spanish:"lo siento",French:"désolé",German:"entschuldigung",Turkish:"özür dilerim",Arabic:"آسف",Hindi:"माफ करना",Portuguese:"desculpe",Russian:"извините",Japanese:"ごめんなさい",Korean:"죄송합니다",Chinese:"对不起",Italian:"scusa",Dutch:"sorry",Polish:"przepraszam",Urdu:"معاف کریں",Uzbek:"kechirasiz"},help:{Spanish:"ayuda",French:"aide",German:"hilfe",Turkish:"yardım",Arabic:"مساعدة",Hindi:"मदद",Portuguese:"ajuda",Russian:"помощь",Japanese:"助けて",Korean:"도움",Chinese:"帮助",Italian:"aiuto",Dutch:"hulp",Polish:"pomoc",Urdu:"مدد",Uzbek:"yordam"},water:{Spanish:"agua",French:"eau",German:"wasser",Turkish:"su",Arabic:"ماء",Hindi:"पानी",Portuguese:"água",Russian:"вода",Japanese:"水",Korean:"물",Chinese:"水",Italian:"acqua",Dutch:"water",Polish:"woda",Urdu:"پانی",Uzbek:"suv"},food:{Spanish:"comida",French:"nourriture",German:"essen",Turkish:"yemek",Arabic:"طعام",Hindi:"खाना",Portuguese:"comida",Russian:"еда",Japanese:"食べ物",Korean:"음식",Chinese:"食物",Italian:"cibo",Dutch:"eten",Polish:"jedzenie",Urdu:"کھانا",Uzbek:"ovqat"},love:{Spanish:"amor",French:"amour",German:"liebe",Turkish:"aşk",Arabic:"حب",Hindi:"प्यार",Portuguese:"amor",Russian:"любовь",Japanese:"愛",Korean:"사랑",Chinese:"爱",Italian:"amore",Dutch:"liefde",Polish:"miłość",Urdu:"محبت",Uzbek:"muhabbat"},good:{Spanish:"bueno",French:"bon",German:"gut",Turkish:"iyi",Arabic:"جيد",Hindi:"अच्छा",Portuguese:"bom",Russian:"хорошо",Japanese:"良い",Korean:"좋다",Chinese:"好",Italian:"buono",Dutch:"goed",Polish:"dobry",Urdu:"اچھا",Uzbek:"yaxshi"},bad:{Spanish:"malo",French:"mauvais",German:"schlecht",Turkish:"kötü",Arabic:"سيء",Hindi:"बुरा",Portuguese:"mau",Russian:"плохو",Japanese:"悪い",Korean:"나쁘다",Chinese:"坏",Italian:"cattivo",Dutch:"slecht",Polish:"zły",Urdu:"برا",Uzbek:"yomon"},friend:{Spanish:"amigo",French:"ami",German:"freund",Turkish:"arkadaş",Arabic:"صديق",Hindi:"दोस्त",Portuguese:"amigo",Russian:"друг",Japanese:"友達",Korean:"친구",Chinese:"朋友",Italian:"amico",Dutch:"vriend",Polish:"przyjaciel",Urdu:"دوست",Uzbek:"do'st"},happy:{Spanish:"feliz",French:"heureux",German:"glücklich",Turkish:"mutlu",Arabic:"سعيد",Hindi:"खुश",Portuguese:"feliz",Russian:"счастливый",Japanese:"嬉しい",Korean:"행복하다",Chinese:"快乐",Italian:"felice",Dutch:"blij",Polish:"szczęśliwy",Urdu:"خوش",Uzbek:"baxtli"},beautiful:{Spanish:"hermoso",French:"beau",German:"schön",Turkish:"güzel",Arabic:"جميل",Hindi:"सुंदर",Portuguese:"bonito",Russian:"красивый",Japanese:"美しい",Korean:"아름답다",Chinese:"美丽",Italian:"bello",Dutch:"mooi",Polish:"piękny",Urdu:"خوبصورت",Uzbek:"chiroyli"},family:{Spanish:"familia",French:"famille",German:"familie",Turkish:"aile",Arabic:"عائلة",Hindi:"परिवार",Portuguese:"família",Russian:"семья",Japanese:"家族",Korean:"가족",Chinese:"家庭",Italian:"famiglia",Dutch:"familie",Polish:"rodzina",Urdu:"خاندان",Uzbek:"oila"},school:{Spanish:"escuela",French:"école",German:"schule",Turkish:"okul",Arabic:"مدرسة",Hindi:"स्कूल",Portuguese:"escola",Russian:"школа",Japanese:"学校",Korean:"학교",Chinese:"学校",Italian:"scuola",Dutch:"school",Polish:"szkoła",Urdu:"اسکول",Uzbek:"maktab"},book:{Spanish:"libro",French:"livre",German:"buch",Turkish:"kitap",Arabic:"كتاب",Hindi:"किताब",Portuguese:"livro",Russian:"книга",Japanese:"本",Korean:"책",Chinese:"书",Italian:"libro",Dutch:"boek",Polish:"książka",Urdu:"کتاب",Uzbek:"kitob"},today:{Spanish:"hoy",French:"aujourd'hui",German:"heute",Turkish:"bugün",Arabic:"اليوم",Hindi:"आज",Portuguese:"hoje",Russian:"сегодня",Japanese:"今日",Korean:"오늘",Chinese:"今天",Italian:"oggi",Dutch:"vandaag",Polish:"dzisiaj",Urdu:"آج",Uzbek:"bugun"},morning:{Spanish:"mañana",French:"matin",German:"morgen",Turkish:"sabah",Arabic:"صباح",Hindi:"सुबह",Portuguese:"manhã",Russian:"утро",Japanese:"朝",Korean:"아침",Chinese:"早上",Italian:"mattina",Dutch:"ochtend",Polish:"rano",Urdu:"صبح",Uzbek:"ertalab"},night:{Spanish:"noche",French:"nuit",German:"nacht",Turkish:"gece",Arabic:"ليل",Hindi:"रात",Portuguese:"noite",Russian:"ночь",Japanese:"夜",Korean:"밤",Chinese:"晚上",Italian:"notte",Dutch:"nacht",Polish:"noc",Urdu:"رات",Uzbek:"kecha"},i:{Spanish:"yo",French:"je",German:"ich",Turkish:"ben",Arabic:"أنا",Hindi:"मैं",Portuguese:"eu",Russian:"я",Japanese:"私",Korean:"나",Chinese:"我",Italian:"io",Dutch:"ik",Polish:"ja",Urdu:"میں",Uzbek:"men"},you:{Spanish:"tú",French:"vous",German:"du",Turkish:"sen",Arabic:"أنت",Hindi:"तुम",Portuguese:"você",Russian:"ты",Japanese:"あなた",Korean:"당신",Chinese:"你",Italian:"tu",Dutch:"jij",Polish:"ty",Urdu:"آپ",Uzbek:"siz"},how:{Spanish:"cómo",French:"comment",German:"wie",Turkish:"nasıl",Arabic:"كيف",Hindi:"कैसे",Portuguese:"como",Russian:"как",Japanese:"どうやって",Korean:"어떻게",Chinese:"怎么",Italian:"come",Dutch:"hoe",Polish:"jak",Urdu:"کیسے",Uzbek:"qanday"},what:{Spanish:"qué",French:"quoi",German:"was",Turkish:"ne",Arabic:"ماذا",Hindi:"क्या",Portuguese:"o que",Russian:"что",Japanese:"何",Korean:"뭐",Chinese:"什么",Italian:"cosa",Dutch:"wat",Polish:"co",Urdu:"کیا",Uzbek:"nima"},money:{Spanish:"dinero",French:"argent",German:"geld",Turkish:"para",Arabic:"مال",Hindi:"पैसा",Portuguese:"dinheiro",Russian:"деньги",Japanese:"お金",Korean:"돈",Chinese:"钱",Italian:"soldi",Dutch:"geld",Polish:"pieniądze",Urdu:"پیسہ",Uzbek:"pul"},hospital:{Spanish:"hospital",French:"hôpital",German:"krankenhaus",Turkish:"hastane",Arabic:"مستشفى",Hindi:"अस्पताल",Portuguese:"hospital",Russian:"больница",Japanese:"病院",Korean:"병원",Chinese:"医院",Italian:"ospedale",Dutch:"ziekenhuis",Polish:"szpital",Urdu:"ہسپتال",Uzbek:"kasalxona"},toilet:{Spanish:"baño",French:"toilettes",German:"toilette",Turkish:"tuvalet",Arabic:"حمام",Hindi:"शौचालय",Portuguese:"banheiro",Russian:"туалет",Japanese:"トイレ",Korean:"화장실",Chinese:"厕所",Italian:"bagno",Dutch:"toilet",Polish:"toaleta",Urdu:"بیت الخلاء",Uzbek:"hojatxona"},hotel:{Spanish:"hotel",French:"hôtel",German:"hotel",Turkish:"otel",Arabic:"فندق",Hindi:"होटल",Portuguese:"hotel",Russian:"отель",Japanese:"ホテル",Korean:"호텔",Chinese:"酒店",Italian:"hotel",Dutch:"hotel",Polish:"hotel",Urdu:"ہوٹل",Uzbek:"mehmonxona"},airport:{Spanish:"aeropuerto",French:"aéroport",German:"flughafen",Turkish:"havalimanı",Arabic:"مطار",Hindi:"हवाई अड्डा",Portuguese:"aeroporto",Russian:"аэропорт",Japanese:"空港",Korean:"공항",Chinese:"机场",Italian:"aeroporto",Dutch:"luchthaven",Polish:"lotnisko",Urdu:"ہوائی اڈہ",Uzbek:"aeroport"}};
+const languages=[{name:"Spanish",flag:"🇪🇸",code:"es"},{name:"French",flag:"🇫🇷",code:"fr"},{name:"German",flag:"🇩🇪",code:"de"},{name:"Turkish",flag:"🇹🇷",code:"tr"},{name:"Arabic",flag:"🇸🇦",code:"ar"},{name:"Hindi",flag:"🇮🇳",code:"hi"},{name:"Portuguese",flag:"🇧🇷",code:"pt"},{name:"Russian",flag:"🇷🇺",code:"ru"},{name:"Japanese",flag:"🇯🇵",code:"ja"},{name:"Korean",flag:"🇰🇷",code:"ko"},{name:"Chinese",flag:"🇨🇳",code:"zh"},{name:"Italian",flag:"🇮🇹",code:"it"},{name:"Dutch",flag:"🇳🇱",code:"nl"},{name:"Polish",flag:"🇵🇱",code:"pl"},{name:"Urdu",flag:"🇵🇰",code:"ur"},{name:"Uzbek",flag:"🇺🇿",code:"uz"}];
 
-const languages=["Spanish","French","German","Turkish","Arabic","Hindi","Portuguese","Russian","Japanese","Korean","Chinese","Italian","Dutch","Polish","Urdu","Uzbek"];
-const flags={Spanish:"🇪🇸",French:"🇫🇷",German:"🇩🇪",Turkish:"🇹🇷",Arabic:"🇸🇦",Hindi:"🇮🇳",Portuguese:"🇧🇷",Russian:"🇷🇺",Japanese:"🇯🇵",Korean:"🇰🇷",Chinese:"🇨🇳",Italian:"🇮🇹",Dutch:"🇳🇱",Polish:"🇵🇱",Urdu:"🇵🇰",Uzbek:"🇺🇿"};
-const langCodes={Spanish:"es-ES",French:"fr-FR",German:"de-DE",Turkish:"tr-TR",Arabic:"ar-SA",Hindi:"hi-IN",Portuguese:"pt-BR",Russian:"ru-RU",Japanese:"ja-JP",Korean:"ko-KR",Chinese:"zh-CN",Italian:"it-IT",Dutch:"nl-NL",Polish:"pl-PL",Urdu:"ur-PK",Uzbek:"uz-UZ"};
+const travelData={"🇫🇷 France":{code:"fr",phrases:[["Hello","Bonjour"],["Where is the bathroom?","Où sont les toilettes?"],["How much?","Combien ça coûte?"],["I need help","J'ai besoin d'aide"],["I am lost","Je suis perdu"],["Call the police","Appelez la police"],["The bill please","L'addition s'il vous plaît"],["Do you speak English?","Parlez-vous anglais?"],["I am allergic","Je suis allergique"],["Thank you","Merci"]]},"🇪🇸 Spain":{code:"es",phrases:[["Hello","Hola"],["Where is the bathroom?","¿Dónde está el baño?"],["How much?","¿Cuánto cuesta?"],["I need help","Necesito ayuda"],["I am lost","Estoy perdido"],["Call the police","Llame a la policía"],["The bill please","La cuenta por favor"],["Do you speak English?","¿Habla inglés?"],["I am allergic","Soy alérgico"],["Thank you","Gracias"]]},"🇩🇪 Germany":{code:"de",phrases:[["Hello","Hallo"],["Where is the bathroom?","Wo ist die Toilette?"],["How much?","Wie viel kostet das?"],["I need help","Ich brauche Hilfe"],["I am lost","Ich bin verloren"],["Call the police","Rufen Sie die Polizei"],["The bill please","Die Rechnung bitte"],["Do you speak English?","Sprechen Sie Englisch?"],["I am allergic","Ich bin allergisch"],["Thank you","Danke"]]},"🇯🇵 Japan":{code:"ja",phrases:[["Hello","こんにちは"],["Where is the bathroom?","トイレはどこですか？"],["How much?","これはいくらですか？"],["I need help","助けてください"],["I am lost","迷子になりました"],["Call the police","警察を呼んでください"],["The bill please","お会計をお願いします"],["Do you speak English?","英語を話せますか？"],["I am allergic","アレルギーがあります"],["Thank you","ありがとう"]]},"🇰🇷 Korea":{code:"ko",phrases:[["Hello","안녕하세요"],["Where is the bathroom?","화장실이 어디에 있나요?"],["How much?","이것은 얼마예요?"],["I need help","도움이 필요해요"],["I am lost","길을 잃었어요"],["Call the police","경찰을 불러주세요"],["The bill please","계산서 주세요"],["Do you speak English?","영어 하세요?"],["I am allergic","알레르기가 있어요"],["Thank you","감사합니다"]]},"🇹🇷 Turkey":{code:"tr",phrases:[["Hello","Merhaba"],["Where is the bathroom?","Tuvalet nerede?"],["How much?","Bu ne kadar?"],["I need help","Yardıma ihtiyacım var"],["I am lost","Kayboldum"],["Call the police","Polis çağırın"],["The bill please","Hesap lütfen"],["Do you speak English?","İngilizce biliyor musunuz?"],["I am allergic","Alerjim var"],["Thank you","Teşekkür ederim"]]},"🇸🇦 Arabia":{code:"ar",phrases:[["Hello","مرحبا"],["Where is the bathroom?","أين الحمام؟"],["How much?","كم يكلف هذا؟"],["I need help","أحتاج مساعدة"],["I am lost","لقد ضللت الطريق"],["Call the police","اتصل بالشرطة"],["The bill please","الفاتورة من فضلك"],["Do you speak English?","هل تتكلم الإنجليزية؟"],["I am allergic","لدي حساسية"],["Thank you","شكرا"]]},"🇮🇳 India":{code:"hi",phrases:[["Hello","नमस्ते"],["Where is the bathroom?","शौचालय कहाँ है?"],["How much?","यह कितने का है?"],["I need help","मुझे मदद चाहिए"],["I am lost","मैं खो गया हूँ"],["Call the police","पुलिस को बुलाओ"],["The bill please","बिल लाइए"],["Do you speak English?","क्या आप अंग्रेजी बोलते हैं?"],["I am allergic","मुझे एलर्जी है"],["Thank you","धन्यवाद"]]},"🇺🇿 Uzbekistan":{code:"uz",phrases:[["Hello","Salom"],["Where is the bathroom?","Hojatxona qayerda?"],["How much?","Bu qancha turadi?"],["I need help","Menga yordam kerak"],["I am lost","Men adashib qoldim"],["Call the police","Politsiyani chaqiring"],["The bill please","Hisobni bering"],["Do you speak English?","Inglizcha bilasizmi?"],["I am allergic","Mening allergiyam bor"],["Thank you","Rahmat"]]},"🇮🇹 Italy":{code:"it",phrases:[["Hello","Ciao"],["Where is the bathroom?","Dov'è il bagno?"],["How much?","Quanto costa?"],["I need help","Ho bisogno di aiuto"],["I am lost","Mi sono perso"],["Call the police","Chiama la polizia"],["The bill please","Il conto per favore"],["Do you speak English?","Parla inglese?"],["I am allergic","Sono allergico"],["Thank you","Grazie"]]}};
 
-const travelData={"🇫🇷 France":{lang:"French",phrases:[["Hello","Bonjour"],["Where is the bathroom?","Où sont les toilettes?"],["How much?","Combien ça coûte?"],["I need help","J'ai besoin d'aide"],["I am lost","Je suis perdu"],["Call the police","Appelez la police"],["The bill please","L'addition s'il vous plaît"],["Do you speak English?","Parlez-vous anglais?"],["I am allergic","Je suis allergique"],["Thank you","Merci"]]},"🇪🇸 Spain":{lang:"Spanish",phrases:[["Hello","Hola"],["Where is the bathroom?","¿Dónde está el baño?"],["How much?","¿Cuánto cuesta?"],["I need help","Necesito ayuda"],["I am lost","Estoy perdido"],["Call the police","Llame a la policía"],["The bill please","La cuenta por favor"],["Do you speak English?","¿Habla inglés?"],["I am allergic","Soy alérgico"],["Thank you","Gracias"]]},"🇩🇪 Germany":{lang:"German",phrases:[["Hello","Hallo"],["Where is the bathroom?","Wo ist die Toilette?"],["How much?","Wie viel kostet das?"],["I need help","Ich brauche Hilfe"],["I am lost","Ich bin verloren"],["Call the police","Rufen Sie die Polizei"],["The bill please","Die Rechnung bitte"],["Do you speak English?","Sprechen Sie Englisch?"],["I am allergic","Ich bin allergisch"],["Thank you","Danke"]]},"🇯🇵 Japan":{lang:"Japanese",phrases:[["Hello","こんにちは"],["Where is the bathroom?","トイレはどこですか？"],["How much?","これはいくらですか？"],["I need help","助けてください"],["I am lost","迷子になりました"],["Call the police","警察を呼んでください"],["The bill please","お会計をお願いします"],["Do you speak English?","英語を話せますか？"],["I am allergic","アレルギーがあります"],["Thank you","ありがとう"]]},"🇰🇷 Korea":{lang:"Korean",phrases:[["Hello","안녕하세요"],["Where is the bathroom?","화장실이 어디에 있나요?"],["How much?","이것은 얼마예요?"],["I need help","도움이 필요해요"],["I am lost","길을 잃었어요"],["Call the police","경찰을 불러주세요"],["The bill please","계산서 주세요"],["Do you speak English?","영어 하세요?"],["I am allergic","알레르기가 있어요"],["Thank you","감사합니다"]]},"🇹🇷 Turkey":{lang:"Turkish",phrases:[["Hello","Merhaba"],["Where is the bathroom?","Tuvalet nerede?"],["How much?","Bu ne kadar?"],["I need help","Yardıma ihtiyacım var"],["I am lost","Kayboldum"],["Call the police","Polis çağırın"],["The bill please","Hesap lütfen"],["Do you speak English?","İngilizce biliyor musunuz?"],["I am allergic","Alerjim var"],["Thank you","Teşekkür ederim"]]},"🇸🇦 Arabia":{lang:"Arabic",phrases:[["Hello","مرحبا"],["Where is the bathroom?","أين الحمام؟"],["How much?","كم يكلف هذا؟"],["I need help","أحتاج مساعدة"],["I am lost","لقد ضللت الطريق"],["Call the police","اتصل بالشرطة"],["The bill please","الفاتورة من فضلك"],["Do you speak English?","هل تتكلم الإنجليزية؟"],["I am allergic","لدي حساسية"],["Thank you","شكرا"]]},"🇮🇳 India":{lang:"Hindi",phrases:[["Hello","नमस्ते"],["Where is the bathroom?","शौचालय कहाँ है?"],["How much?","यह कितने का है?"],["I need help","मुझे मदद चाहिए"],["I am lost","मैं खो गया हूँ"],["Call the police","पुलिस को बुलाओ"],["The bill please","बिल लाइए"],["Do you speak English?","क्या आप अंग्रेजी बोलते हैं?"],["I am allergic","मुझे एलर्जी है"],["Thank you","धन्यवाद"]]},"🇺🇿 Uzbekistan":{lang:"Uzbek",phrases:[["Hello","Salom"],["Where is the bathroom?","Hojatxona qayerda?"],["How much?","Bu qancha turadi?"],["I need help","Menga yordam kerak"],["I am lost","Men adashib qoldim"],["Call the police","Politsiyani chaqiring"],["The bill please","Hisobni bering"],["Do you speak English?","Inglizcha bilasizmi?"],["I am allergic","Mening allergiyam bor"],["Thank you","Rahmat"]]},"🇮🇹 Italy":{lang:"Italian",phrases:[["Hello","Ciao"],["Where is the bathroom?","Dov'è il bagno?"],["How much?","Quanto costa?"],["I need help","Ho bisogno di aiuto"],["I am lost","Mi sono perso"],["Call the police","Chiama la polizia"],["The bill please","Il conto per favore"],["Do you speak English?","Parla inglese?"],["I am allergic","Sono allergico"],["Thank you","Grazie"]]}};
+let selectedLang=languages[0], history=[], recognition=null, isListening=false, lastTranslation="";
 
-let selectedLang="Spanish", history=[], recognition=null, isListening=false, lastTranslation="";
-
-// build modal language buttons
+// build modal
 const mg=document.getElementById('modalGrid');
 languages.forEach(lang=>{
   const btn=document.createElement('button');
-  btn.className='modal-lang-btn'+(lang===selectedLang?' active':'');
-  btn.textContent=flags[lang]+' '+lang;
+  btn.className='modal-lang-btn'+(lang.name===selectedLang.name?' active':'');
+  btn.textContent=lang.flag+' '+lang.name;
   btn.onclick=()=>{
     selectedLang=lang;
     document.querySelectorAll('.modal-lang-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('selectedLangDisplay').textContent=flags[lang]+' '+lang;
+    document.getElementById('selectedLangDisplay').textContent=lang.flag+' '+lang.name;
     closeModal();
   };
   mg.appendChild(btn);
 });
 
-// build country buttons
+// build countries
 const cg=document.getElementById('countryGrid');
 Object.keys(travelData).forEach(country=>{
   const btn=document.createElement('button');
@@ -233,55 +207,77 @@ Object.keys(travelData).forEach(country=>{
   cg.appendChild(btn);
 });
 
-function openModal(){document.getElementById('modalOverlay').classList.add('show');}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
-function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
-
 function showPhrases(country){
   const data=travelData[country];
-  const lc=langCodes[data.lang]||'en';
   document.getElementById('phraseList').innerHTML=data.phrases.map(([en,tr])=>`
     <li>
       <span class="en">${en}</span>
       <span class="tr">${tr}</span>
-      <button class="phrase-speak" onclick="speak('${tr.replace(/'/g,"\\'").replace(/"/g,'&quot;')}','${lc}')">🔊</button>
+      <button class="phrase-speak" onclick="speak('${tr.replace(/'/g,"\\'").replace(/"/g,'&quot;')}','${data.code}')">🔊</button>
     </li>`).join('');
 }
 
-function translateWord(w){const e=dictionary[w.toLowerCase()];return e&&e[selectedLang]?e[selectedLang]:w;}
-
-function doTranslate(){
+// ── REAL TRANSLATION via MyMemory API ──
+async function doTranslate(){
   const input=document.getElementById('inputText').value.trim();
   if(!input)return;
-  const translated=input.split(/\s+/).map(w=>translateWord(w)).join(' ');
-  lastTranslation=translated;
-  document.getElementById('resultText').textContent=translated;
-  document.getElementById('resultLang').textContent=flags[selectedLang]+' '+selectedLang;
-  document.getElementById('resultBox').classList.add('show');
-  history.unshift({orig:input,trans:translated,lang:selectedLang});
-  renderHistory();
+  const btn=document.getElementById('translateBtn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="loading"></span>Translating…';
+  try{
+    const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=en|${selectedLang.code}`);
+    const data=await res.json();
+    const translated=data.responseData.translatedText;
+    lastTranslation=translated;
+    document.getElementById('resultText').textContent=translated;
+    document.getElementById('resultLang').textContent=selectedLang.flag+' '+selectedLang.name;
+    document.getElementById('resultBox').classList.add('show');
+    history.unshift({orig:input,trans:translated,lang:selectedLang.flag});
+    renderHistory();
+  }catch(e){
+    showToast('Translation failed. Check internet connection.');
+  }
+  btn.disabled=false;
+  btn.innerHTML='Translate ✦';
+}
+
+// ── REVERSE via MyMemory API ──
+async function doReverse(){
+  const input=document.getElementById('reverseInput').value.trim();
+  if(!input)return;
+  const btn=document.getElementById('reverseBtn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="loading"></span>Finding meaning…';
+  try{
+    // try to detect and translate to English
+    const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|en`);
+    const data=await res.json();
+    const result=data.responseData.translatedText;
+    document.getElementById('reverseText').textContent=result;
+    document.getElementById('reverseResult').classList.add('show');
+  }catch(e){
+    showToast('Could not find meaning. Check internet connection.');
+  }
+  btn.disabled=false;
+  btn.innerHTML='Find English meaning ✦';
 }
 
 function copyTranslation(){
   if(!lastTranslation)return;
   navigator.clipboard.writeText(lastTranslation).then(()=>showToast('Copied! 📋')).catch(()=>{
-    const ta=document.createElement('textarea');
-    ta.value=lastTranslation;document.body.appendChild(ta);ta.select();
-    document.execCommand('copy');document.body.removeChild(ta);
-    showToast('Copied! 📋');
+    const ta=document.createElement('textarea');ta.value=lastTranslation;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Copied! 📋');
   });
 }
 
 function speakTranslation(){
   if(!lastTranslation)return;
-  speak(lastTranslation,langCodes[selectedLang]||'en');
+  speak(lastTranslation,selectedLang.code);
 }
 
 function speak(text,lang){
   window.speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
-  u.lang=lang;
-  window.speechSynthesis.speak(u);
+  u.lang=lang;window.speechSynthesis.speak(u);
 }
 
 function toggleMic(){
@@ -289,74 +285,26 @@ function toggleMic(){
   if(!SRClass){showToast('Use Chrome for voice input 🎤');return;}
   if(isListening){if(recognition)recognition.stop();return;}
   recognition=new SRClass();
-  recognition.lang='en-US';
-  recognition.continuous=false;
-  recognition.interimResults=false;
-  recognition.onstart=()=>{
-    isListening=true;
-    const btn=document.getElementById('micBtn');
-    btn.classList.add('listening');btn.textContent='⏹';
-    showToast('Listening… speak now 🎤');
-  };
-  recognition.onresult=e=>{
-    const transcript=e.results[0][0].transcript;
-    document.getElementById('inputText').value=transcript;
-    doTranslate();
-  };
-  recognition.onerror=e=>{
-    showToast('Mic error: '+e.error);
-    isListening=false;
-    const btn=document.getElementById('micBtn');
-    btn.classList.remove('listening');btn.textContent='🎤';
-  };
-  recognition.onend=()=>{
-    isListening=false;
-    const btn=document.getElementById('micBtn');
-    btn.classList.remove('listening');btn.textContent='🎤';
-  };
+  recognition.lang='en-US';recognition.continuous=false;recognition.interimResults=false;
+  recognition.onstart=()=>{isListening=true;document.getElementById('micBtn').classList.add('listening');document.getElementById('micBtn').textContent='⏹';showToast('Listening… speak now 🎤');};
+  recognition.onresult=e=>{document.getElementById('inputText').value=e.results[0][0].transcript;doTranslate();};
+  recognition.onerror=e=>{showToast('Mic error: '+e.error);isListening=false;document.getElementById('micBtn').classList.remove('listening');document.getElementById('micBtn').textContent='🎤';};
+  recognition.onend=()=>{isListening=false;document.getElementById('micBtn').classList.remove('listening');document.getElementById('micBtn').textContent='🎤';};
   try{recognition.start();}catch(e){showToast('Could not start mic');}
-}
-
-function doReverse(){
-  const input=document.getElementById('reverseInput').value.trim().toLowerCase();
-  if(!input)return;
-  const matches=[];
-  for(const [eng,translations] of Object.entries(dictionary)){
-    for(const [lang,val] of Object.entries(translations)){
-      if(val.toLowerCase()===input)matches.push({eng,lang,val});
-    }
-  }
-  const result=document.getElementById('reverseResult');
-  const list=document.getElementById('reverseMatches');
-  result.classList.add('show');
-  if(matches.length===0){
-    list.innerHTML='<li style="color:var(--soft);font-style:italic">No match found. Try another word 🌸</li>';
-  } else {
-    list.innerHTML=matches.map(m=>`<li>${flags[m.lang]} <span>${m.val}</span> in ${m.lang} = <strong>${m.eng}</strong></li>`).join('');
-  }
 }
 
 function renderHistory(){
   const list=document.getElementById('historyList');
   if(history.length===0){list.innerHTML='<li class="empty-history">No translations yet 🌸</li>';return;}
-  list.innerHTML=history.slice(0,10).map(h=>`<li><span class="orig">${h.orig}</span><span class="arrow">→</span><span class="trans">${h.trans} <span style="font-size:.72rem;color:#b0a0b0">${flags[h.lang]}</span></span></li>`).join('');
+  list.innerHTML=history.slice(0,10).map(h=>`<li><span class="orig">${h.orig}</span><span class="arrow">→</span><span class="trans">${h.trans} <span style="font-size:.72rem">${h.lang}</span></span></li>`).join('');
 }
 
 function clearHistory(){history=[];renderHistory();document.getElementById('resultBox').classList.remove('show');}
-
-function switchTab(name,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(name).classList.add('active');
-  btn.classList.add('active');
-}
-
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-
+function openModal(){document.getElementById('modalOverlay').classList.add('show');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
+function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+function switchTab(name,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(name).classList.add('active');btn.classList.add('active');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 document.getElementById('inputText').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doTranslate();}});
 document.getElementById('reverseInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doReverse();}});
 </script>
