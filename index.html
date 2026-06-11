@@ -557,22 +557,7 @@ async function doFoodScan(){
     ? `The user is allergic to or wants to avoid: ${myAllergens.map(a=>a.label.replace(/^\S+\s/,'')).join(', ')}.`
     : 'The user has not selected any allergens (treat all ingredients as safe).';
 
-  const systemPrompt = `You are a food safety assistant. Analyze ingredient labels from images.
-${allergenContext}
-
-When given an ingredient list image, extract all ingredients and classify each as:
-- "danger": contains something the user is allergic to / must avoid
-- "caution": something that may cause mild issues (high sugar, MSG, artificial colors, etc.) OR if user selected it as caution
-- "safe": fine for this user
-- "unknown": can't determine
-
-Respond ONLY in JSON (no markdown, no backticks):
-{
-  "ingredients": [{"name":"...", "status":"safe|caution|danger|unknown"}],
-  "overall": "safe|caution|danger",
-  "summary": "one short sentence about overall safety for this user",
-  "detected_allergens": ["list of allergens found that match user's restrictions"]
-}`;
+  const systemPrompt = `You are a food safety assistant. Analyze ingredient labels from images. The label may be in any language including Korean, Japanese, Chinese — translate and analyze it. ${allergenContext} Classify each ingredient as danger (allergic), caution (high sugar/MSG/preservatives/artificial colors), safe, or unknown. YOU MUST respond with ONLY raw JSON, no explanation, no markdown, no backticks. Start with { and end with }. Example: {"ingredients":[{"name":"sugar","status":"caution"}],"overall":"caution","summary":"Contains high sugar.","detected_allergens":[]}`;
 
   const GEMINI_KEY = ['AQ.Ab8RN6JyE0RjyTUGItl', 'txRwedMKLs70FdPHOxFZSH_47o7Zfug'].join('');
   try {
@@ -594,10 +579,12 @@ Respond ONLY in JSON (no markdown, no backticks):
     const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     let parsed;
     try {
-      const clean = rawText.replace(/```json|```/g,'').trim();
+      let clean = rawText.replace(/```json|```/g,'').trim();
+      const match = clean.match(/\{[\s\S]*\}/);
+      if (match) clean = match[0];
       parsed = JSON.parse(clean);
     } catch(e) {
-      resultDiv.innerHTML = `<div class="scan-loading">⚠️ Could not parse AI response. Please try a clearer image.</div>`;
+      resultDiv.innerHTML = '<div class="scan-loading">⚠️ AI returned unexpected format. Try again.</div>';
       return;
     }
     renderScanResult(parsed);
