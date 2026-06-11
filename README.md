@@ -1,4 +1,4 @@
-# Mini Unix Shell — Language Translator
+# Fable — Language Translator
 ### Advanced C Programming Project
 
 A terminal-based language translator built in C, designed as part of an Advanced C Programming course. The program translates English text into multiple languages using a built-in dictionary, process-style input handling, and session history management.
