@@ -1,4 +1,4 @@
-# Fable — Your Translation Helper
+# Fable — Your Travel Helper
 ### Advanced C Programming Project
 
 A travel companion web app built as part of an Advanced C Programming course. Fable helps you communicate, explore, and stay safe anywhere in the world — with translation, sign language, barcode food scanning, and more.
