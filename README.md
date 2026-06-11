@@ -1,51 +1,53 @@
-# Fable — Language Translator
+# Fable — Your Translation Helper
 ### Advanced C Programming Project
 
-A terminal-based language translator built in C, designed as part of an Advanced C Programming course. The program translates English text into multiple languages using a built-in dictionary, process-style input handling, and session history management.
+A travel companion web app built as part of an Advanced C Programming course. Fable helps you communicate, explore, and stay safe anywhere in the world — with translation, sign language, barcode food scanning, and more.
 
 ---
 
 ## Features
 
-- **Multi-language translation** — English to Spanish, French, German, Turkish, Arabic
-- **Sentence-level translation** — tokenises and translates word by word
-- **Translation history** — stores up to 50 past translations in memory
-- **Clean terminal UI** — box-drawn menus and formatted output
-- **Built-in help system** — accessible from the main menu
+- *Multi-language translation* — Translate between 16 languages instantly
+- *Voice to text* — Speak and get your translation out loud
+- *Travel phrases* — Quick-access common phrases for travellers
+- *Reverse lookup* — Enter any word and find its meaning across languages
+- *Sign language* — Type or speak in any language and see it in sign language (for accessibility)
+- *Barcode food scanner* — Scan any food product barcode to check ingredients against your allergies and dietary restrictions using the Open Food Facts database — no API key needed!
+- *Translation history* — View and revisit past translations
+- *16 supported languages* — Including English, Spanish, French, German, Arabic, Turkish, Japanese, Korean, and more
 
 ---
 
 ## File Structure
 
-```
-translator/
+
+fable/
+├── index.html      # Full web app (UI, logic, all features)
 ├── main.c          # Entry point, main loop, UI menus
 ├── translator.c    # Dictionary and translation logic
 ├── translator.h    # Translator function prototypes and types
 ├── history.c       # Session history management
 ├── history.h       # History function prototypes
 └── README.md       # Project documentation
-```
+
 
 ---
 
-## How to Compile & Run
+## How to Run
 
-```bash
-gcc main.c translator.c history.c -o translator
-./translator
-```
+Simply open index.html in any browser — no installation needed!
+
+Or visit the live version at: *joyful-mooncake-58ac40.netlify.app*
 
 ---
 
 ## How to Use
 
-1. Run the program
-2. Choose **Translate text** from the menu
-3. Select a target language
-4. Type an English sentence
-5. See the translation instantly
-6. View past translations under **View history**
+1. *Translate* — Pick languages, type or speak, hit translate
+2. *Travel* — Browse common travel phrases by category
+3. *Reverse* — Enter a word to find its meaning in any language
+4. *Sign* — See sign language for anything you type or say
+5. *Food Scanner* — Enter a product barcode to check if it's safe for your diet
 
 ---
 
@@ -54,7 +56,7 @@ gcc main.c translator.c history.c -o translator
 | Name | Student ID |
 |------|-----------|
 | Pragati Badame | 25013466 |
-|Raisa Leuza Afnan | 25013403|
+| Raisa Leuza Afnan | 25013403 |
 | Nafiz Arfan Ahmed | 23012854 |
 | Ashu | 25014147 |
 
@@ -63,8 +65,11 @@ gcc main.c translator.c history.c -o translator
 ## Concepts Applied
 
 - Structs and enums in C
-- String tokenisation (`strtok`)
+- String tokenisation (strtok)
 - Memory management with static arrays
-- Modular file structure (`.c` / `.h` separation)
+- Modular file structure (.c / .h separation)
 - Terminal I/O and formatted output
-
+- Web technologies: HTML, CSS, JavaScript
+- REST API integration (Open Food Facts)
+- Base64 image encoding
+- LocalStorage for persistent user preferences
