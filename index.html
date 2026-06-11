@@ -247,17 +247,22 @@ footer{text-align:center;margin-top:1.5rem;font-size:.75rem;color:#c5b0c5;}
       </div>
     </div>
 
-    <!-- Scan Card -->
+    <!-- Barcode Scanner Card -->
     <div class="card">
-      <div class="allergy-section-title">📸 Scan Ingredient Label</div>
-      <p style="font-size:.8rem;color:var(--soft);margin-bottom:.8rem;">Upload a photo of a food product's ingredient list. AI will analyze it against your selections.</p>
-      <div class="food-upload-zone" id="uploadZone">
-        <input type="file" id="foodImageInput" accept="image/*" onchange="handleFoodImage(event)" />
-        <div class="food-upload-icon">📷</div>
-        <div class="food-upload-text">Tap to upload or drag & drop<br><span style="font-size:.72rem;">Supports JPG, PNG, WEBP</span></div>
+      <div class="allergy-section-title">🔍 Barcode Food Scanner</div>
+      <p style="font-size:.8rem;color:var(--soft);margin-bottom:1rem;">Type a barcode number to instantly look up any food product and check it against your allergies. Uses the Open Food Facts global database — no API key needed!</p>
+      <div style="display:flex;gap:.5rem;margin-bottom:.8rem;">
+        <input id="barcodeInput" placeholder="e.g. 3017620422003 (Nutella)" style="flex:1;padding:.75rem 1rem;border-radius:12px;border:1.5px solid #eddee8;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--text);background:rgba(255,255,255,.6);outline:none;" />
+        <button class="custom-allergy-btn" onclick="doBarcodeScan()" style="padding:.75rem 1.2rem;font-size:.9rem;">🔍 Look Up</button>
       </div>
-      <img class="food-preview-img" id="foodPreview" alt="Ingredient label preview" />
-      <button class="btn-translate" id="scanBtn" onclick="doFoodScan()" style="display:none;margin-top:1rem;">Analyze Ingredients ✦</button>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem;">
+        <span style="font-size:.75rem;color:var(--soft);width:100%;margin-bottom:.2rem;">Try these examples:</span>
+        <button class="action-btn" onclick="quickScan('3017620422003')">🍫 Nutella</button>
+        <button class="action-btn" onclick="quickScan('5000159484695')">🍫 KitKat</button>
+        <button class="action-btn" onclick="quickScan('7613035352247')">🥣 Milo</button>
+        <button class="action-btn" onclick="quickScan('8076800195057')">🍝 Barilla</button>
+        <button class="action-btn" onclick="quickScan('0038000845559')">🥣 Corn Flakes</button>
+      </div>
       <div id="scanResult"></div>
     </div>
   </div>
@@ -439,7 +444,7 @@ document.getElementById('inputText').addEventListener('keydown',e=>{if(e.key==='
 document.getElementById('reverseInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doReverse();}});
 document.getElementById('signInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSign();}});
 
-// ─── FOOD SCANNER ────────────────────────────────────────────────────────────
+// ─── BARCODE FOOD SCANNER ────────────────────────────────────────────────────
 
 const PRESET_ALLERGENS = [
   {id:'gluten',    label:'🌾 Gluten',      level:'danger',  keywords:['wheat','gluten','barley','rye','malt','spelt','triticale']},
@@ -462,7 +467,6 @@ const PRESET_ALLERGENS = [
 
 let selectedAllergens = new Set(JSON.parse(localStorage.getItem('lp_allergens')||'[]'));
 let customAllergens   = JSON.parse(localStorage.getItem('lp_custom_allergens')||'[]');
-let foodImageBase64   = null;
 
 function saveAllergenPrefs(){
   localStorage.setItem('lp_allergens', JSON.stringify([...selectedAllergens]));
@@ -511,117 +515,130 @@ function removeCustom(id, e){
 }
 
 document.getElementById('customAllergyInput').addEventListener('keydown',e=>{if(e.key==='Enter')addCustomAllergy();});
+document.getElementById('barcodeInput').addEventListener('keydown',e=>{if(e.key==='Enter')doBarcodeScan();});
 
-function handleFoodImage(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const dataUrl = ev.target.result;
-    foodImageBase64 = dataUrl.split(',')[1];
-    const preview = document.getElementById('foodPreview');
-    preview.src = dataUrl;
-    preview.style.display = 'block';
-    document.getElementById('scanBtn').style.display = 'block';
-    document.getElementById('scanResult').innerHTML = '';
-    showToast('Image loaded — tap Analyze! 🌿');
-  };
-  reader.readAsDataURL(file);
+function quickScan(barcode){
+  document.getElementById('barcodeInput').value = barcode;
+  doBarcodeScan();
 }
 
-// Drag & drop
-const uploadZone = document.getElementById('uploadZone');
-uploadZone.addEventListener('dragover', e=>{e.preventDefault();uploadZone.classList.add('drag-over');});
-uploadZone.addEventListener('dragleave', ()=>uploadZone.classList.remove('drag-over'));
-uploadZone.addEventListener('drop', e=>{
-  e.preventDefault(); uploadZone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if(file && file.type.startsWith('image/')){
-    const fakeEvt = {target:{files:[file]}};
-    handleFoodImage(fakeEvt);
-  }
-});
-
-async function doFoodScan(){
-  if(!foodImageBase64){showToast('Please upload an image first 📷');return;}
+async function doBarcodeScan(){
+  const barcode = document.getElementById('barcodeInput').value.trim();
+  if(!barcode){showToast('Please enter a barcode number 🔍');return;}
   const resultDiv = document.getElementById('scanResult');
-  resultDiv.innerHTML = `<div class="scan-loading"><span class="spin">⏳</span>Scanning ingredients…</div>`;
+  resultDiv.innerHTML = `<div class="scan-loading"><span class="spin">⏳</span>Looking up product…</div>`;
 
-  // Build allergen context
-  const allItems = [
-    ...PRESET_ALLERGENS,
-    ...customAllergens.map(c=>({id:'custom_'+c, label:c, level:'danger', keywords:[c.toLowerCase()]}))
-  ];
-  const myAllergens = allItems.filter(a=>selectedAllergens.has(a.id));
-  const allergenContext = myAllergens.length
-    ? `The user is allergic to or wants to avoid: ${myAllergens.map(a=>a.label.replace(/^\S+\s/,'')).join(', ')}.`
-    : 'The user has not selected any allergens (treat all ingredients as safe).';
-
-  const systemPrompt = `You are a food safety assistant. Analyze ingredient labels from images. The label may be in any language including Korean, Japanese, Chinese — translate and analyze it. ${allergenContext} Classify each ingredient as danger (allergic), caution (high sugar/MSG/preservatives/artificial colors), safe, or unknown. YOU MUST respond with ONLY raw JSON, no explanation, no markdown, no backticks. Start with { and end with }. Example: {"ingredients":[{"name":"sugar","status":"caution"}],"overall":"caution","summary":"Contains high sugar.","detected_allergens":[]}`;
-
-  const GEMINI_KEY = ['AQ.Ab8RN6JyE0RjyTUGItl', 'txRwedMKLs70FdPHOxFZSH_47o7Zfug'].join('');
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        contents: [{
-          parts: [
-            {text: systemPrompt + '\n\nPlease analyze the ingredient list in this image and classify each ingredient for my dietary restrictions.'},
-            {inline_data: {mime_type: 'image/jpeg', data: foodImageBase64}}
-          ]
-        }],
-        generationConfig: {temperature: 0.1, maxOutputTokens: 1000}
-      })
-    });
+    const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`);
+    const data = await res.json();
 
-    const data = await response.json();
-    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    let parsed;
-    try {
-      let clean = rawText.replace(/```json|```/g,'').trim();
-      const match = clean.match(/\{[\s\S]*\}/);
-      if (match) clean = match[0];
-      parsed = JSON.parse(clean);
-    } catch(e) {
-      resultDiv.innerHTML = '<div class="scan-loading">⚠️ AI returned unexpected format. Try again.</div>';
+    if(data.status === 0){
+      resultDiv.innerHTML = `<div class="scan-loading">❌ Product not found. Try another barcode!</div>`;
       return;
     }
-    renderScanResult(parsed);
+
+    const product = data.product;
+    const name = product.product_name || product.product_name_en || 'Unknown Product';
+    const brand = product.brands || '';
+    const image = product.image_front_small_url || product.image_url || '';
+    const ingredientsText = (product.ingredients_text || product.ingredients_text_en || '').toLowerCase();
+    const allergensTags = (product.allergens_tags || []).join(' ');
+
+    // Build allergen context
+    const allItems = [
+      ...PRESET_ALLERGENS,
+      ...customAllergens.map(c=>({id:'custom_'+c, label:c, level:'danger', keywords:[c.toLowerCase()]}))
+    ];
+    const myAllergens = allItems.filter(a=>selectedAllergens.has(a.id));
+
+    // Check each selected allergen against ingredients
+    let foundDanger = [];
+    let foundCaution = [];
+
+    myAllergens.forEach(allergen => {
+      const hit = allergen.keywords.some(kw =>
+        ingredientsText.includes(kw) || allergensTags.includes(kw)
+      );
+      if(hit){
+        if(allergen.level === 'danger') foundDanger.push(allergen.label);
+        else foundCaution.push(allergen.label);
+      }
+    });
+
+    // Classify all ingredients
+    const rawIngredients = ingredientsText
+      .replace(/\(.*?\)/g, '')
+      .split(/[,;]/)
+      .map(s=>s.trim())
+      .filter(s=>s.length > 1 && s.length < 60)
+      .slice(0, 30);
+
+    const classifiedIngredients = rawIngredients.map(ing => {
+      const isDanger = PRESET_ALLERGENS.filter(a=>a.level==='danger')
+        .some(a=>a.keywords.some(kw=>ing.includes(kw)));
+      const isCaution = PRESET_ALLERGENS.filter(a=>a.level==='caution')
+        .some(a=>a.keywords.some(kw=>ing.includes(kw)));
+      const isMyDanger = myAllergens.filter(a=>a.level==='danger')
+        .some(a=>a.keywords.some(kw=>ing.includes(kw)));
+      const isMyWarn = myAllergens.filter(a=>a.level==='caution')
+        .some(a=>a.keywords.some(kw=>ing.includes(kw)));
+
+      let status = 'safe';
+      if(isMyDanger) status = 'danger';
+      else if(isMyWarn || isCaution) status = 'caution';
+      return {name: ing, status};
+    });
+
+    const overall = foundDanger.length > 0 ? 'danger' : foundCaution.length > 0 ? 'caution' : 'safe';
+    renderBarcodeResult({name, brand, image, ingredients: classifiedIngredients, overall, foundDanger, foundCaution, barcode});
+
   } catch(err) {
     resultDiv.innerHTML = `<div class="scan-loading">⚠️ Error: ${err.message}</div>`;
   }
 }
 
-function renderScanResult(data){
-  const {ingredients=[],overall='unknown',summary='',detected_allergens=[]} = data;
+function renderBarcodeResult({name, brand, image, ingredients, overall, foundDanger, foundCaution, barcode}){
   const verdictClass = overall==='safe'?'safe-verdict':overall==='danger'?'danger-verdict':'warn-verdict';
   const verdictIcon = overall==='safe'?'✅':overall==='danger'?'🚫':'⚠️';
   const verdictTitle = overall==='safe'?'Safe to eat!':overall==='danger'?'Not safe — allergens found!':'Proceed with caution';
+  const summary = overall==='safe'
+    ? 'No allergens from your list were detected.'
+    : overall==='danger'
+    ? `Contains: ${foundDanger.join(', ')}`
+    : `May contain: ${foundCaution.join(', ')}`;
 
-  const pillsHtml = ingredients.map(ing=>`<span class="ing-pill ${ing.status||'unknown'}">${ing.name}</span>`).join('');
-  const detectedHtml = detected_allergens.length
-    ? `<div style="margin-top:.8rem;font-size:.78rem;color:#c0243a;">🚨 Found: ${detected_allergens.join(', ')}</div>`
+  const pillsHtml = ingredients.map(ing=>`<span class="ing-pill ${ing.status}">${ing.name}</span>`).join('');
+  const alertHtml = foundDanger.length
+    ? `<div style="margin-top:.6rem;font-size:.78rem;color:#c0243a;">🚨 Allergens found: ${foundDanger.join(', ')}</div>`
+    : foundCaution.length
+    ? `<div style="margin-top:.6rem;font-size:.78rem;color:#c06a10;">⚠️ Caution: ${foundCaution.join(', ')}</div>`
     : '';
 
   document.getElementById('scanResult').innerHTML = `
     <div class="scan-result-card">
+      <div style="display:flex;align-items:center;gap:1rem;padding:.8rem 1.2rem;background:rgba(255,255,255,.6);border-bottom:1px solid rgba(240,216,228,.4);">
+        ${image ? `<img src="${image}" style="width:54px;height:54px;object-fit:contain;border-radius:8px;border:1px solid #f0d8e4;">` : '<div style="width:54px;height:54px;border-radius:8px;background:#f4c6cc;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🛒</div>'}
+        <div>
+          <div style="font-weight:600;font-size:.95rem;color:var(--text)">${name}</div>
+          ${brand ? `<div style="font-size:.78rem;color:var(--soft)">${brand}</div>` : ''}
+          <div style="font-size:.7rem;color:#c5b0c5;margin-top:.1rem;">Barcode: ${barcode}</div>
+        </div>
+      </div>
       <div class="scan-verdict ${verdictClass}">
         <div class="verdict-icon">${verdictIcon}</div>
         <div class="verdict-text">
           <h3>${verdictTitle}</h3>
           <p>${summary}</p>
-          ${detectedHtml}
+          ${alertHtml}
         </div>
       </div>
       <div class="ingredient-breakdown">
         <div class="breakdown-title">Ingredient Breakdown</div>
-        <div class="ingredient-pill-row">${pillsHtml}</div>
+        <div class="ingredient-pill-row">${pillsHtml || '<span style="color:var(--soft);font-size:.82rem;font-style:italic">No ingredient details available</span>'}</div>
         <div class="legend-row" style="margin-top:.6rem;">
           <span><span class="legend-dot" style="background:#ff8fa3;"></span>Danger</span>
           <span><span class="legend-dot" style="background:#f6b47a;"></span>Caution</span>
           <span><span class="legend-dot" style="background:#7ecfb8;"></span>Safe</span>
-          <span><span class="legend-dot" style="background:#c5b0c5;"></span>Unknown</span>
         </div>
       </div>
     </div>`;
